@@ -2,7 +2,7 @@
 
 **Zen** theme strives to be as clean and standard compliant as possible with some neat features. A solid base for your custom [Hugo](https://gohugo.io/) theme.
 
-It uses HTML5 with a modern CSS grid and flex layout. Care has ben taken to produce semantic and accessible code.
+It uses HTML5 with a modern CSS grid and flex layout. Care has been taken to produce semantic and accessible code.
 
 ![Lighthouse report](https://raw.githubusercontent.com/frjo/hugo-theme-zen/main/images/lighthouse_report.png)
 
@@ -133,7 +133,7 @@ Afterwards, declare the `zen` theme module as a dependency of your site:
 From the root of your site:
 
 ```shell
-hugo mod get -u github.com/frjo/hugo-theme-zen/v2
+hugo mod get -u github.com/frjo/hugo-theme-zen/v3
 ```
 
 ### Git submodule
@@ -209,19 +209,7 @@ Some performance tools will complain about to many files (js and css files are n
 
 ## Screenshots
 
-### On the large screen
-
 ![screenshot](https://raw.githubusercontent.com/frjo/hugo-theme-zen/main/images/tn.png)
-
-
-### On the small screen
-
-![screenshot](https://raw.githubusercontent.com/frjo/hugo-theme-zen/main/images/tn_mobil.png)
-
-
-### The mobile menu
-
-![screenshot](https://raw.githubusercontent.com/frjo/hugo-theme-zen/main/images/tn_mobil_menu.png)
 
 
 ## Configuration
@@ -239,8 +227,8 @@ params:
   cookieConsent: true       # Show cookie consent form, default false.
   contact: "info@example.org"
   copyright: "This site is licensed under a 
-              (https://creativecommons.org/licenses/by-sa/4.0/)."
-              [Creative Commons Attribution-ShareAlike 4.0 International License]
+              [Creative Commons Attribution-ShareAlike 4.0 International
+              License](https://creativecommons.org/licenses/by-sa/4.0/)."
   dateformat: ""            # Set the date format, default to "2 January, 2006"
   description: ""           # Set site description, used in meta tags and JSON-LD
   favicon: ""               # Relative path to favicon in json feed, no leading slash.
@@ -252,8 +240,9 @@ params:
   internalPagination: true  # Use Hugos internal pagination template, default false.
   jquery: true              # Add jQuery, default false.
   languageDir: ""           # Set ltr or rtl, defaults to ltr.
-  logo: false               # Turn off the logo.
+  logo: false               # Turn off the logo, defaults to true.
   logoPath:                 # Relative path to site logo, defaults to "images/logo.png", no leading slash.
+  logoHeight:               # Set logo height, defaults to none.
   logoWidth:                # Set logo width, defaults to none.
   mainSections:             # The sections you want to have listed on the front page.
     - "section1"            # Default to the section with most content if not set.
