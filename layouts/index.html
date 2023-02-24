@@ -10,8 +10,8 @@
 {{ .Render "summary" }}
 {{ end -}}
 
-<section id="blog-popular" class="blog-popular" aria-labelledby="blog-popular">
-<h2>Most popular posts</h2>
+<section id="blog-popular" class="blog-popular" aria-labelledby="blog-popular-title">
+<h2 id="blog-popular-title">Most popular posts</h2>
 <ul>
 {{ range site.Taxonomies.tags.popular }}
 {{ .Render "li" }}
@@ -19,8 +19,8 @@
 </ul>
 </section>
 
-<section id="blog-archive" class="blog-archive" aria-labelledby="blog-archive">
-<h2>Blog archive</h2>
+<section id="blog-archive" class="blog-archive" aria-labelledby="blog-archive-title">
+<h2 id="blog-archive-title">Blog archive</h2>
 <ul>
 {{ range after site.Params.frontposts (where site.RegularPages "Type" "post") -}}
 {{ .Render "li" }}
