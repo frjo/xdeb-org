@@ -115,6 +115,7 @@ blockquote {
   &__toggle {
     color: var(--color-text-bg);
     border-color: var(--color-text-bg);
+    background-color: var(--color-header-bg);
   }
 
   &__hamburger {
