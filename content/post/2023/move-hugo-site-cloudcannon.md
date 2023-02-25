@@ -1,5 +1,5 @@
 ---
-title: "Move a Hugo site to Cloudcannon CMS"
+title: "Move a Hugo site to CloudCannon CMS"
 slug: "move-hugo-site-cloudcannon"
 date: 2023-02-25T13:44:56+01:00
 lastmod: 2023-02-25T13:44:56+01:00
@@ -9,3 +9,196 @@ draft: true
 
 ---
 
+I found [Hugo](https://gohugo.io/) in 2017 and since then I have used it to build a lot of web sites. Building sites with Hugo is fun!
+
+For customer sites where an editor needed to keep the site updated I early on started to use [Forestry.io](https://forestry.io/). Quick and easy to setup and synced all changes to GitHub without issues. Editors could jump in and start working without much help.
+
+Last year Forestry annonsed they where closing down the service by early 2023. Good on them to give people many month to plan a migration to other systems. They have a new product called [Tina CMS](https://tina.io/) that seems very JavaScript framework oriented. Not my cup of tea.
+
+I looked for a new solution with these features:
+
+* First class Hugo support (shortcodes, assets etc.).
+* Easy for editors to use without much learning curve.
+* Option to sync to GitHub without lock in on hosting.
+* Easy to configure and no need to adapt the sites.
+* Resonable pricing.
+
+The options are surprisingly few. After testing them the only one I found interesting was [CloudCannon](https://cloudcannon.com/).
+
+## CloudCannon
+
+When you have everything setup CloudCannon is a impressive editing environment. The clients that have tested it a bit really like it. This is most likely the service I will use moving forward.
+
+Setting it all up is however far more work than I planed for. On one customers site, where they have a lot of shortcodes, the CloudCannon conf files ended up to be 700+ lines long.
+
+With Forestry it was a lot less work and you could do most of it directly in the UI. It was also a simpler environment. Forcing editors to handle shortcodes manually resulted in quite a few support issues.
+
+[CloudCannon documentation](https://cloudcannon.com/documentation/?ssg=Hugo) looks really nice and thorough. When I actually started using it I hit a lot of brick-walls and was forced to contact support. Luckily the support is both quick and competent and could help me with all my issues. This however was time consuming and it took me far longer to get the first sites set up than I had anticipated.
+
+The documentation gives you some very simple examples that is not really helpful for real sites. Then you have reference pages that have a lot of information but do not really tell you how it all should hang together.
+
+I miss examples for how to set up complex, real world, web sites.
+
+Now that I have set up my first sites, the rest will be mush easier. If the editors are happy, the time spent will be worth it. But with better documentation and examples it could have been a lot easier I think.
+
+My guess is that a lot of effort has gone it to building the tools and that the documentation has been lagging. A few things I needed support for turned out to be undocumented even.
+
+I know from my own experience that writing code is a lot more fun then writing documentation. But a nice product like CloudCannon deserves excellent documentation.
+
+### Three different editors, visual, content and source
+
+I only bothered with the content editor. It is what I would call the normal editor. You get a sidebar with fields for all the front matter and a big area for the body with an toolbar at the top.
+
+The visual editor shows the rendered pages and allows you to edit sections that are set up for it. You need to add classes to your templates and additional configuration to set it up. For my projects I saw no benefit in spending time on this. Setting up the parts I did was time consuming enough.
+
+The source editor allows you to edit the plain markdown files. When I need do do that I use my favourite text editor, not a browser.
+
+### cloudcannon.config.yaml examples
+
+Here are some examples from the [example conf file](https://github.com/frjo/hugo-theme-zen/blob/main/cloudcannon.config.yaml.example) I have added to my [Hugo Zen theme](https://github.com/frjo/hugo-theme-zen).
+
+Hopefully this can be useful for others starting out with CloudCannon.
+
+#### Schemas (archetypes)
+
+Collection schemas is one of the most important things to set up. Without specifying content schemas (more or less archetypes in Hugo speak) CloudCannon will not understand what fields to set up for editing the front matter.
+
+I have archetypes setup for each content type that list all the needed front matter. Do not know why CloudCannon can not autodetect them. With schemes you can also set upp alternative archetypes with e.g. default type/layout values. That is handy. Editors will then get easy choices for what type of page they want to create.
+
+OBS! One vital setting to add is `remove_extra_inputs: false`. It needs to be set to each and every schema type. This will stop CloudCannon from deleting front matter params that are not listed. The default is `true` and that do not make sense to me.
+
+I often add front matter params to content that editors should never change. I on purpose did not add these params to the schemas and was surprised to see them deleted when an editor tested to edit a post.
+
+~~~~
+collections_config:
+  pages:
+    schemas:
+      default:
+        path: archetypes/default.md
+        remove_extra_inputs: false
+~~~~
+
+
+#### Inputs
+
+Also important to to set up is the inputs. This decide what widget you get for inputing the different front matter params. Some obvious ones are autodetected but I suggest you configure them all to be sure everything is in place.
+
+Even if "date" is autodetected you need to add `instance_value: NOW` to get todays date and time to be pre-filled. I search for terms like default/pre/initial but then support informed me it was called `instance_value`. It is documented but hard to find when the name is not something you thought to search for.
+
+~~~~
+_inputs:
+  title:
+    type: text
+    comment: The title of your page.
+  date:
+    type: datetime
+    instance_value: NOW
+    comment: Date of this page.
+  description:
+    type: textarea
+    comment: Short desciption, for search engines and sharing.
+  draft:
+    type: switch
+  image:
+    type: image
+  tags:
+    type: array
+    comment: Tags for this page.
+  tags[*]:
+    type: text
+~~~~
+
+
+#### Snippets (shortcodes)
+
+If you use a lot of shortcodes this will be the bulk of your configuration.
+
+Needed a lot of trial and error and a lot of contact with support to get this working. Especially the previews.
+
+If you use shortcodes but do not configure snippets for them they show up in the content editor as "unknown" and all the editor can do is move it, not edit it in any way.
+
+Setting `optional: true` for optional attributes is vital. If a shortcode is missing a attribute that is not set as optional, Cloudcannon will bail out and say that the shortcode is "unknown".
+
+Picking the right `template` is key. For Hugo there are three types.
+
+1. `hugo_shortcode` when there are no arguments.
+2. `hugo_shortcode_positional_args` when there are positional arguments.
+3. `hugo_shortcode_named_args` when there are named arguments.
+
+Each type then have four variants, e.g.
+
+1. `hugo_shortcode` for `{{< shortcode >}}.
+2. `hugo_paired_shortcode` for `{{< shortcode >}}Some inner content{{< /shortcode >}}`.
+3. `hugo_markdown_shortcode` for `{{% shortcode %}}`.
+4. `hugo_paired_markdown_shortcode` for `{{% shortcode %}}Some inner content{{% /shortcode %}}`.
+
+
+~~~~
+_snippets:
+  zen_contact:
+    template: hugo_shortcode
+    inline: false
+    preview:
+      icon: email
+      text: Contact form
+    definitions:
+      shortcode_name: contact
+
+  zen_wrapper:
+    template: hugo_paired_shortcode_positional_args
+    inline: false
+    preview:
+      icon: wrap_text
+      text: Wrapper
+      subtext:
+        - key: class
+        - No class
+    definitions:
+      shortcode_name: wrapper
+      content_key: content_inner
+      positional_args:
+        - editor_key: class
+          type: string
+
+  zen_img:
+    template: hugo_shortcode_named_args
+    inline: false
+    preview:
+      view: gallery
+      icon: image
+      text: Image
+      subtext:
+        - key: alt
+        - No alt
+      gallery:
+        image:
+          - key: src
+        text: No preview available
+        fit: contain
+    definitions:
+      shortcode_name: img
+      named_args:
+        - editor_key: src
+          type: string
+        - editor_key: class
+          type: string
+          optional: true
+        - editor_key: alt
+          type: string
+          optional: true
+        - editor_key: height
+          type: string
+          optional: true
+        - editor_key: width
+          type: string
+          optional: true
+        - editor_key: link
+          type: string
+          optional: true
+        - editor_key: size
+          type: string
+          optional: true
+        - editor_key: srcset
+          type: string
+          optional: true
+~~~~
