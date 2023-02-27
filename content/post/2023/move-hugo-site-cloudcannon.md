@@ -90,7 +90,7 @@ I have archetypes setup for each content type that list all the needed front mat
 
 With schemes you can also set upp alternative archetypes with e.g. default type/layout values. That is handy. Editors will then get easy choices for what type of page they want to create in each section.
 
-OBS! One vital setting to add is `remove_extra_inputs: false`. It needs to be set to each and every schema type. This will stop CloudCannon from deleting front matter params that are not listed. I believe that the default for this setting should be "false".
+OBS! One vital setting to add is `remove_extra_inputs: false`. It needs to be set for each and every schema type. This will stop CloudCannon from deleting front matter params that are not listed. I strongly believe the default for this setting should be "false".
 
 I often add front matter params to content that editors should never change. I on purpose did not add these params to the schemas and was surprised to see them deleted when an editor tested to edit a post.
 
@@ -145,7 +145,7 @@ If you use a lot of shortcodes this will be the bulk of your configuration.
 
 Needed a lot of trial and error and a lot of contact with support to get this working. Especially the previews. The `view: gallery` setting is e.g., as far as I can see, still undocumented.
 
-If you use shortcodes but do not configure snippets for them, they show up in the content editor as "unknown". All the editor can do then is move them, no editing is possible.
+If you use shortcodes but do not configure snippets for them, they show up in the content editor as "unknown". All the editor can do then is move them, no editing is of them possible.
 
 Setting `optional: true` for optional attributes is vital. If a shortcode is missing a attribute that is not set as optional, Cloudcannon will bail out and say that the shortcode is "unknown".
 
