@@ -8,6 +8,8 @@ tags: ["hugo","cloudcannon","development"]
 
 ---
 
+{{< figure src="images/cloudcannon.png" class="right" width="180" alt="CloudCannon logo" >}}
+
 I found [Hugo](https://gohugo.io/) in 2017 and since then I have used it to build a lot of web sites. Building sites with Hugo is fun!
 
 For customer sites where an editor need to keep the site updated I early on started to use [Forestry.io](https://forestry.io/). Quick and easy to setup and sync all changes to GitHub without issues. Editors can jump in and start working without much help.
