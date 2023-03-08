@@ -5,6 +5,7 @@ date: 2023-01-06T11:33:53+01:00
 lastmod: 2023-01-06T11:33:53+01:00
 author: "Fredrik Jonsson"
 tags: ["hugo","github","development"]
+description: "Use GitHub action to automatically deploy a Hugo site to GitHub pages."
 
 ---
 

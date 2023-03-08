@@ -5,7 +5,7 @@ date: 2020-02-28T21:13:56+01:00
 lastmod: 2020-10-10T14:20:19+02:00
 author: "Fredrik Jonsson"
 tags: ["wi-fi","network","popular"]
-
+description: "Setup a advanced home network including guest and IOT VLAN with UniFi and a EdgeRouter"
 ---
 
 My goal is to have separate wireless networks for guest and IOT devices, each on there own VLAN. Setting up VLAN with an EdgeRouter, UniFi switch and UniFI access points takes a few extra steps. In this post I describe how I got it working.

@@ -5,6 +5,7 @@ date: 2023-01-08T17:02:10+01:00
 lastmod: 2023-01-08T17:02:10+01:00
 author: "Fredrik Jonsson"
 tags: ["hugo","github","development"]
+description: "Use the output from APIs like Notion and Airtable to build a Hugo site."
 
 ---
 

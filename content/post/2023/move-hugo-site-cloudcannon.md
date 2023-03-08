@@ -5,6 +5,7 @@ date: 2023-02-27T15:06:40+01:00
 lastmod: 2023-02-27T15:06:40+01:00
 author: "Fredrik Jonsson"
 tags: ["hugo","cloudcannon","development"]
+description: "Tips to ease the move of a complex Hugo site to the CloudCannon CMS."
 
 ---
 
